@@ -1,9 +1,15 @@
+<button (click)="updateEvents()" id="updateEvents">Update events</button>
+<button (click)="updateHeader()" id="updateHeader">Update header</button>
 <full-calendar
-  defaultView="dayGridMonth"
-  [plugins]="calendarPlugins"
-  [weekends]="false"
-  [events]="[
-    { title: 'event 1', date: '2019-04-01' },
-    { title: 'event 2', date: '2019-04-02' }
-  ]"
+  *ngIf="options"
+  #fullcalendar
+  [editable]="true"
+  [events]="eventsModel"
+  [header]="options.header"
+  [customButtons]="options.customButtons"
+  (dateClick)="dateClick($event)"
+  (eventDragStop)="eventDragStop($event)"
+  [plugins]="options.plugins"
+  (eventClick)="eventClick($event)"
 ></full-calendar>
+<router-outlet></router-outlet>
