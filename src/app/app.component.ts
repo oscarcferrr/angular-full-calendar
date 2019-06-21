@@ -1,9 +1,8 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { FullCalendarComponent } from '@fullcalendar/angular';
-
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction'
-import { OptionsInput } from '@fullcalendar/core';
+import { OptionsInput, EventInput } from '@fullcalendar/core';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -12,10 +11,13 @@ import { OptionsInput } from '@fullcalendar/core';
 export class AppComponent implements OnInit {
   title = 'angular-full-calendar';
   options: OptionsInput;
-  eventsModel: any;
+  eventsModel: EventInput;
 
   @ViewChild('fullcalendar', { static: false }) fullcalendar: FullCalendarComponent;
   ngOnInit() {
+    this.eventsModel = [
+      { title: 'Event Now', start: new Date() }
+    ]
     this.options = {
       editable: true,
       customButtons: {
@@ -31,9 +33,17 @@ export class AppComponent implements OnInit {
         center: 'title',
         right: 'dayGridMonth'
       },
-      plugins: [dayGridPlugin, interactionPlugin]
+      plugins: [dayGridPlugin, interactionPlugin],
     };
-
+  }
+  handleDateClick(arg) {
+    if (confirm('Would you like to add an event to ' + arg.dateStr + ' ?')) {
+      this.eventsModel = this.eventsModel.concat({ // add new event data. must create new array
+        title: 'New Event',
+        start: arg.date,
+        allDay: arg.allDay
+      })
+    }
   }
   eventClick(model) {
     console.log(model);
