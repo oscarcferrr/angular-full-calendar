@@ -29,9 +29,9 @@ export class AppComponent implements OnInit {
         }
       },
       header: {
-        left: 'prev,next today myCustomButton',
+        left:'addEvent',
         center: 'title',
-        right: 'dayGridMonth'
+        right: 'prev,next today dayGridMonth '
       },
       plugins: [dayGridPlugin, interactionPlugin],
     };
